@@ -13,6 +13,7 @@ INSTALL_REQUIRES = [
     'Flask-SQLAlchemy',
     'flask-restx',
     'python-dotenv',
+    'Werkzeug==2.1.2',
     'PyJWT',
     'python-dateutil',
 ]

@@ -6,7 +6,7 @@ authorizations = {
     'Bearer': {
         'type': 'apiKey',
         'in': 'header',
-        'name': 'Authorization'
+        'name': 'Authorization',
     }
 }
 
