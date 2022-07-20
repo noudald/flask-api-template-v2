@@ -17,6 +17,11 @@ def create_app(config_name):
     app = Flask(config.APP_NAME)
     app.config.from_object(config)
 
+    # Import in function to avoid circular imports.
+    from flask_api_template.api import api_bp
+
+    app.register_blueprint(api_bp)
+
     cors.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
