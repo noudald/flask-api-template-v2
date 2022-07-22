@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import timezone
 from uuid import uuid4
 
 from flask import current_app
@@ -25,14 +25,12 @@ class User(db.Model):
     public_id = db.Column(db.String(36), unique=True, default=lambda: str(uuid4()))
 
     def __repr__(self):
-        return (
-            '<User'
+        return ('<User'
                 f'username={self.username}'
                 f', email={self.email}'
                 f', public_id={self.public_id}'
                 f', admin={self.admin}'
-            '>'
-        )
+                '>')
 
     @hybrid_property
     def registered_on_str(self):
