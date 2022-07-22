@@ -1,5 +1,7 @@
-from datetime import timezone
+from datetime import datetime, timedelta, timezone
 from uuid import uuid4
+
+import jwt
 
 from flask import current_app
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -52,13 +54,27 @@ class User(db.Model):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
+    def encode_access_token(self):
+        now = datetime.now(timezone.utc)
+        if current_app.config['TESTING']:
+            expire = now + timedelta(seconds=1)
+        else:
+            token_age_h = current_app.config.get('TOKEN_EXPIRE_HOURS')
+            token_age_m = current_app.config.get('TOKEN_EXPIRE_MINUTES')
+            expire = now + timedelta(hours=token_age_h, minutes=token_age_m)
+
+        payload = dict(exp=expire, iat=now, sub=self.public_id, admin=self.admin)
+        key = current_app.config.get('SECRET_KEY')
+
+        return jwt.encode(payload, key, algorithm='HS256')
+
     @classmethod
     def find_by_username(cls, username):
-        return cls.query.filter(username=username).first()
+        return cls.query.filter_by(username=username).first()
 
     @classmethod
     def find_by_email(cls, email):
-        return cls.query.filter(email=email).first()
+        return cls.query.filter_by(email=email).first()
 
     @classmethod
     def find_by_public_id(cls, public_id):
