@@ -50,3 +50,50 @@ def process_registration_request(username, email, password):
     response.headers['Pragma'] = 'no-cache'
 
     return response
+
+
+def process_login_request(username, email, password):
+    user_by_name = User.find_by_username(username)
+    if not user_by_name:
+        abort(
+            HTTPStatus.UNAUTHORIZED,
+            f'Username does not exists',
+            status='fail'
+        )
+
+    user_by_email = User.find_by_email(email)
+    if not user_by_email:
+        abort(
+            HTTPStatus.UNAUTHORIZED,
+            f'Email does not exists',
+            status='fail'
+        )
+
+    if user_by_name != user_by_email:
+        abort(
+            HTTPStatus.UNAUTHORIZED,
+            f'Username and email do not match',
+            status='fail'
+        )
+    user = user_by_name
+
+    if not user.check_password(password):
+        abort(
+            HTTPStatus.UNAUTHORIZED,
+            f'Password does not match',
+            status='fail'
+        )
+
+    access_token = user.encode_access_token()
+    response = jsonify(
+        status='success',
+        message='Successfully logged in',
+        access_token=access_token,
+        token_type='bearer',
+        expires_in=_get_token_expire_time(),
+    )
+    response.status_code = HTTPStatus.OK,
+    response.headers['Cache-Control'] = 'no-store'
+    response.headers['Pragma'] = 'no-cache'
+
+    return response

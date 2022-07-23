@@ -68,6 +68,33 @@ class User(db.Model):
 
         return jwt.encode(payload, key, algorithm='HS256')
 
+    def decode_access_token(access_token):
+        if isinstance(access_token, bytes):
+            access_token = access_token.decode('ascii')
+
+        if access_token.startswith('Bearer '):
+            access_token = access_token.split('Bearer')[1].strip()
+
+        try:
+            key = current_app.config.get('SECRET_KEY')
+            payload = jwt.decode(access_token, key, algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            return Result.Fail('Access token expired. Please login again')
+        except jwt.InvalidTokenError:
+            return Result.Fail('Invalid token. Please login again')
+
+        if BlacklistedToken.check_blacklist(access_token):
+            return Result.Fail('Token blacklisted. Please login again')
+
+        user_dict = dict(
+            public_id=payload['sub'],
+            admin=payload['admin'],
+            token=access_token,
+            expires_at=payload['exp']
+        )
+
+        return Result.Ok(user_dict)
+
     @classmethod
     def find_by_username(cls, username):
         return cls.query.filter_by(username=username).first()
