@@ -57,7 +57,7 @@ def process_login_request(username, email, password):
     if not user_by_name:
         abort(
             HTTPStatus.UNAUTHORIZED,
-            f'Username does not exists',
+            f'Username {username} does not exists',
             status='fail'
         )
 
@@ -65,14 +65,14 @@ def process_login_request(username, email, password):
     if not user_by_email:
         abort(
             HTTPStatus.UNAUTHORIZED,
-            f'Email does not exists',
+            f'Email {email} does not exists',
             status='fail'
         )
 
     if user_by_name != user_by_email:
         abort(
             HTTPStatus.UNAUTHORIZED,
-            f'Username and email do not match',
+            f'Username {username} and email {email} do not match',
             status='fail'
         )
     user = user_by_name
@@ -80,7 +80,7 @@ def process_login_request(username, email, password):
     if not user.check_password(password):
         abort(
             HTTPStatus.UNAUTHORIZED,
-            f'Password does not match',
+            'Password does not match',
             status='fail'
         )
 

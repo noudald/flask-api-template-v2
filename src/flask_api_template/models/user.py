@@ -7,12 +7,14 @@ from flask import current_app
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from flask_api_template import db, bcrypt
+from flask_api_template.models.token_blacklist import BlacklistedToken
 from flask_api_template.util.datetime_util import (
     utc_now,
     get_local_utcoffset,
     make_tzaware,
     localized_dt_string
 )
+from flask_api_template.util.result import Result
 
 
 class User(db.Model):
