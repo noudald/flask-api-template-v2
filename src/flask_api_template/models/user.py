@@ -30,7 +30,7 @@ class User(db.Model):
 
     def __repr__(self):
         return ('<User'
-                f'username={self.username}'
+                f' username={self.username}'
                 f', email={self.email}'
                 f', public_id={self.public_id}'
                 f', admin={self.admin}'
@@ -108,3 +108,7 @@ class User(db.Model):
     @classmethod
     def find_by_public_id(cls, public_id):
         return cls.query.filter_by(public_id=public_id).first()
+
+    @classmethod
+    def list_all_users(cls):
+        return cls.query.all()
