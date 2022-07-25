@@ -98,7 +98,7 @@ def process_login_request(username, email, password):
         token_type='bearer',
         expires_in=_get_token_expire_time(),
     )
-    response.status_code = HTTPStatus.OK,
+    response.status_code = HTTPStatus.OK
     response.headers['Cache-Control'] = 'no-store'
     response.headers['Pragma'] = 'no-cache'
 
