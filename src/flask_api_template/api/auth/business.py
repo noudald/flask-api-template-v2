@@ -4,7 +4,13 @@ from flask import current_app, jsonify
 from flask_restx import abort
 
 from flask_api_template import db
+from flask_api_template.api.auth.decorators import token_required
+from flask_api_template.models.token_blacklist import BlacklistedToken
 from flask_api_template.models.user import User
+from flask_api_template.util.datetime_util import (
+    remaining_fromtimestamp,
+    format_tiimespan_digits
+)
 
 
 def _get_token_expire_time():
@@ -97,3 +103,32 @@ def process_login_request(username, email, password):
     response.headers['Pragma'] = 'no-cache'
 
     return response
+
+
+@token_required
+def get_logged_in_user():
+    public_id = get_logged_in_user.public_id
+    user = User.find_by_public_id(public_id)
+    expires_at = get_logged_in_user.expires_at
+    user.token_expires_in = format_timespan_digits(
+        remaining_fromtimestamp(expires_at)
+    )
+    return user
+
+
+@token_required
+def process_logout_request():
+    access_token = process_logout_request.token
+    expires_at = process_logout_request.expires_at
+
+    blacklisted_token = BlacklistedToken(access_token, expires_at)
+
+    db.session.add(blacklisted_token)
+    db.session.commit()
+
+    response_dict = dict(
+        status='success',
+        message='Successfully logged out.'
+    )
+
+    return response_dict, HTTPStatus.OK
