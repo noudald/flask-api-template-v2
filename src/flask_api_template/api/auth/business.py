@@ -9,7 +9,7 @@ from flask_api_template.models.token_blacklist import BlacklistedToken
 from flask_api_template.models.user import User
 from flask_api_template.util.datetime_util import (
     remaining_fromtimestamp,
-    format_tiimespan_digits
+    format_timespan_digits
 )
 
 
