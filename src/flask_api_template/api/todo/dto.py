@@ -1,5 +1,5 @@
 from flask_restx import Model
-from flask_restx import fields, inputs
+from flask_restx import fields
 from flask_restx.reqparse import RequestParser
 
 
@@ -20,7 +20,7 @@ todo_reqparser.add_argument(
 )
 todo_reqparser.add_argument(
     name='deadline',
-    type=inputs.date(),
+    type=str,
     location='form',
     required=True,
     nullable=False,
