@@ -20,7 +20,7 @@ todo_reqparser.add_argument(
 )
 todo_reqparser.add_argument(
     name='deadline',
-    type=str,
+    type=inputs.date(),
     location='form',
     required=True,
     nullable=False,
