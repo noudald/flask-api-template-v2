@@ -5,6 +5,7 @@ import click
 from flask_api_template import create_app, db
 from flask_api_template.models.token_blacklist import BlacklistedToken
 from flask_api_template.models.user import User
+from flask_api_template.models.todo import TodoTask
 
 app = create_app(os.getenv('FLASK_ENV', 'development'))
 
@@ -15,6 +16,7 @@ def shell():
         'db': db,
         'BlacklistedToken': BlacklistedToken,
         'User': User,
+        'TodoTask': TodoTask,
     }
 
 
