@@ -11,6 +11,7 @@ from flask_api_template.api.todo.business import (
     update_todo_task,
     get_todo_task,
     delete_todo_task,
+    get_todo_list
 )
 
 
@@ -66,7 +67,14 @@ class TodoTask(Resource):
     @todo_ns.marshal_with(todo_model)
     def put(self, id):
         '''Update todo tasks.'''
-        pass
+        request_data = todo_reqparser.parse_args()
+
+        task = request_data.get('task')
+        assigned = request_data.get('assigned')
+        deadline = request_data.get('deadline')
+        finished = request_data.get('finished')
+
+        return update_todo_task(id, task, assigned, deadline, finished)
 
     @todo_ns.expect(todo_reqparser)
     @todo_ns.response(

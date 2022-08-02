@@ -15,11 +15,11 @@ class TodoTask(db.Model):
 
     def __repr__(self):
         return ('<TodoTask'
-                f' id={id}'
-                f', assigned={assigned}'
-                f', task=\"{task}\"'
-                f', deadline={deadline}'
-                f', finished={finished}'
+                f' id={self.id}'
+                f', assigned={self.assigned}'
+                f', task=\"{self.task}\"'
+                f', deadline={self.deadline}'
+                f', finished={self.finished}'
                 '>')
 
     @classmethod
