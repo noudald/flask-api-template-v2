@@ -6,9 +6,12 @@ from pathlib import Path
 
 CUR_PATH = Path(__file__).parent
 
-SQLITE_DEV = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_dev.db')
-SQLITE_TEST = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_test.db')
-SQLITE_PROD = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_prod.db')
+# SQLITE_DEV = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_dev.db')
+# SQLITE_TEST = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_test.db')
+# SQLITE_PROD = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_prod.db')
+SQLITE_DEV = 'sqlite:///flask_api_template_dev.db'
+SQLITE_TEST = 'sqlite:///flask_api_template_test.db'
+SQLITE_PROD = 'sqlite:///flask_api_template_prod.db'
 
 
 class Config:

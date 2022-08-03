@@ -37,11 +37,18 @@ class TodoList(Resource):
     @todo_ns.marshal_with(todo_model)
     def post(self):
         '''Add new task to todo list.'''
-        pass
+        request_data = todo_reqparser.parse_args()
+
+        task = request_data.get('task')
+        assigned = request_data.get('assigned')
+        deadline = request_data.get('deadline')
+        finished = request_data.get('finished')
+
+        return new_todo_task(task, assigned, deadline, finished)
 
     def get(self):
         '''Get list of all todo list tasks.'''
-        pass
+        return get_todo_list()
 
 
 @todo_ns.route('/task/<int:id>', endpoint='todo_task')
