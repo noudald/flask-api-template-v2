@@ -78,8 +78,19 @@ def update_todo_task(id, task, assigned, deadline, finished):
     return response
 
 
-def delete_todo_task():
-    pass
+def delete_todo_task(id):
+    task = TodoTask.find_by_id(id)
+    if not task:
+        abort(
+            HTTPStatus.CONFLICT,
+            f'Task {id} does not exist.',
+            status='fail'
+        )
+
+    db.session.delete(task)
+    db.session.commit()
+
+    return HTTPStatus.NO_CONTENT
 
 
 def get_todo_list():

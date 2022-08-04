@@ -123,4 +123,4 @@ class TodoTask(Resource):
     )
     def delete(self, id):
         '''Delete todo task.'''
-        pass
+        return delete_todo_task(id)
