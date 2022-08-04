@@ -83,7 +83,6 @@ class TodoTask(Resource):
 
         return update_todo_task(id, task, assigned, deadline, finished)
 
-    @todo_ns.expect(todo_reqparser)
     @todo_ns.response(
         int(HTTPStatus.OK),
         'Successfully retrieved task.',
@@ -104,7 +103,7 @@ class TodoTask(Resource):
     @todo_ns.marshal_with(todo_model)
     def get(self, id):
         '''Get todo task.'''
-        pass
+        return get_todo_task(id)
 
     @todo_ns.response(
         int(HTTPStatus.NO_CONTENT),

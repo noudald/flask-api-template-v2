@@ -31,8 +31,22 @@ def new_todo_task(task, assigned, deadline, finished):
 
     return response
 
-def get_todo_task():
-    pass
+def get_todo_task(id):
+    task = TodoTask.find_by_id(id)
+    if not task:
+        abort(
+            HTTPStatus.CONFLICT,
+            f'Task {id} does not exist.',
+            status='fail'
+        )
+
+    return dict(
+            id=task.id,
+            assigned=task.assigned,
+            task=task.task,
+            deadline=task.deadline,
+            finished=task.finished,
+        ), HTTPStatus.OK
 
 
 def update_todo_task(id, task, assigned, deadline, finished):
