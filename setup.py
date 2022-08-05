@@ -21,6 +21,8 @@ EXTRAS_REQUIRE = {
     'dev': [
         'pytest',
         'pylint',
+        'pylint-flask',
+        'pylint-flask-sqlalchemy',
         'tox',
     ]
 }
