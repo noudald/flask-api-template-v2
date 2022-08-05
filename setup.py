@@ -20,8 +20,7 @@ INSTALL_REQUIRES = [
 EXTRAS_REQUIRE = {
     'dev': [
         'pytest',
-        'pytest-flake8',
-        'pytest-flask',
+        'pylint',
         'tox',
     ]
 }
