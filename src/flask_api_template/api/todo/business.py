@@ -18,18 +18,13 @@ def new_todo_task(task, assigned, deadline, finished):
     db.session.add(new_task)
     db.session.commit()
 
-    response = jsonify(
-        status='success',
-        message='successfully added new task',
-        id=new_task.id,
-        task=new_task.task,
-        assigned=new_task.assigned,
-        deadline=new_task.deadline,
-        finished=new_task.finished
-    )
-    response.status_code = HTTPStatus.CREATED
-
-    return response
+    return dict(
+            id=new_task.id,
+            task=new_task.task,
+            assigned=new_task.assigned,
+            deadline=new_task.deadline,
+            finished=new_task.finished,
+        ), HTTPStatus.CREATED
 
 def get_todo_task(id_):
     task = TodoTask.find_by_id(id_)

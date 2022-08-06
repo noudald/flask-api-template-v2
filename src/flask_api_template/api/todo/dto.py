@@ -43,3 +43,12 @@ todo_model = Model(
         'finished': fields.Boolean,
     }
 )
+
+todo_list_model = Model(
+    'TodoList',
+    {
+        'status': fields.String,
+        'message': fields.String,
+        'tasks': fields.List(fields.Nested(todo_model)),
+    }
+)

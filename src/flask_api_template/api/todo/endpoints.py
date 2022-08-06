@@ -7,7 +7,8 @@ from flask_restx import Namespace, Resource
 
 from flask_api_template.api.todo.dto import (
     todo_reqparser,
-    todo_model
+    todo_model,
+    todo_list_model,
 )
 from flask_api_template.api.todo.business import (
     new_todo_task,
@@ -20,6 +21,7 @@ from flask_api_template.api.todo.business import (
 
 todo_ns = Namespace(name='todo', validate=True)
 todo_ns.models[todo_model.name] = todo_model
+todo_ns.models[todo_list_model.name] = todo_list_model
 
 
 @todo_ns.route('/task', endpoint='todo_tasks')
@@ -49,6 +51,15 @@ class TodoList(Resource):
 
         return new_todo_task(task, assigned, deadline, finished)
 
+    @todo_ns.response(
+        int(HTTPStatus.OK),
+        'Succesfully collected all tasks.',
+        todo_list_model
+    )
+    @todo_ns.response(
+        int(HTTPStatus.INTERNAL_SERVER_ERROR),
+        'Internal server error.'
+    )
     def get(self):
         '''Get list of all todo list tasks.'''
         return get_todo_list()
