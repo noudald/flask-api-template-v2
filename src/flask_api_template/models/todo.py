@@ -23,8 +23,8 @@ class TodoTask(db.Model):
                 '>')
 
     @classmethod
-    def find_by_id(cls, id):
-        return cls.query.filter_by(id=id).first()
+    def find_by_id(cls, id_):
+        return cls.query.filter_by(id=id_).first()
 
     @classmethod
     def list_all_tasks(cls):

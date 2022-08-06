@@ -1,3 +1,6 @@
+# We have to use id for identification number of todo task.
+# pylint: disable=redefined-builtin
+
 from http import HTTPStatus
 
 from flask_restx import Namespace, Resource

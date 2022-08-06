@@ -27,7 +27,4 @@ class BlacklistedToken(db.Model):
 
     @classmethod
     def check_blacklist(cls, token):
-        if cls.query.filter_by(token=token).first():
-            return True
-        else:
-            return False
+        return bool(cls.query.filter_by(token=token).first())

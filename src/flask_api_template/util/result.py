@@ -17,15 +17,13 @@ class Result:
         '''Informal string representation of a result.'''
         if self.success:
             return '[Success]'
-        else:
-            return f'[Failure] {self.error}'
+        return f'[Failure] {self.error}'
 
     def __repr__(self):
         '''Official string representation of a result.'''
         if self.success:
             return f'<Result success={self.success}>'
-        else:
-            return f'<Result success={self.success}, message=\'{self.error}\'>'
+        return f'<Result success={self.success}, message=\'{self.error}\'>'
 
     @property
     def failure(self):

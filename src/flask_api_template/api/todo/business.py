@@ -31,8 +31,8 @@ def new_todo_task(task, assigned, deadline, finished):
 
     return response
 
-def get_todo_task(id):
-    task = TodoTask.find_by_id(id)
+def get_todo_task(id_):
+    task = TodoTask.find_by_id(id_)
     if not task:
         abort(
             HTTPStatus.CONFLICT,
@@ -49,8 +49,8 @@ def get_todo_task(id):
         ), HTTPStatus.OK
 
 
-def update_todo_task(id, task, assigned, deadline, finished):
-    if not TodoTask.find_by_id(id):
+def update_todo_task(id_, task, assigned, deadline, finished):
+    if not TodoTask.find_by_id(id_):
         abort(
             HTTPStatus.CONFLICT,
             f'Task {id} does not exist.',
@@ -67,7 +67,7 @@ def update_todo_task(id, task, assigned, deadline, finished):
     response = jsonify(
         status='success',
         message='successfully updated task',
-        id=id,
+        id=id_,
         task=task,
         assigned=assigned,
         deadline=deadline,
@@ -78,8 +78,8 @@ def update_todo_task(id, task, assigned, deadline, finished):
     return response
 
 
-def delete_todo_task(id):
-    task = TodoTask.find_by_id(id)
+def delete_todo_task(id_):
+    task = TodoTask.find_by_id(id_)
     if not task:
         abort(
             HTTPStatus.CONFLICT,

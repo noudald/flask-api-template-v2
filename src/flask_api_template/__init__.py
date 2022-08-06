@@ -18,6 +18,7 @@ def create_app(config_name):
     app.config.from_object(config)
 
     # Import in function to avoid circular imports.
+    # pylint: disable=import-outside-toplevel,cyclic-import
     from flask_api_template.api import api_bp
     app.register_blueprint(api_bp)
 

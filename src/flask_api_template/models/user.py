@@ -70,6 +70,7 @@ class User(db.Model):
 
         return jwt.encode(payload, key, algorithm='HS256')
 
+    @staticmethod
     def decode_access_token(access_token):
         if isinstance(access_token, bytes):
             access_token = access_token.decode('ascii')
