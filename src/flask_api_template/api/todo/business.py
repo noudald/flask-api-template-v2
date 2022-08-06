@@ -1,4 +1,3 @@
-from datetime import datetime
 from http import HTTPStatus
 
 from flask import jsonify
@@ -12,7 +11,7 @@ def new_todo_task(task, assigned, deadline, finished):
     new_task = TodoTask(
         task=task,
         assigned=assigned,
-        deadline=datetime.strptime(deadline, '%d-%m-%Y'),
+        deadline=deadline,
         finished=finished
     )
     db.session.add(new_task)
@@ -55,7 +54,7 @@ def update_todo_task(id_, task, assigned, deadline, finished):
     todo_task = TodoTask.query.filter_by(id=id).first()
     todo_task.task = task
     todo_task.assigned = assigned
-    todo_task.deadline = datetime.strptime(deadline, '%d-%m-%Y')
+    todo_task.deadline = deadline
     todo_task.finished = finished
     db.session.commit()
 
