@@ -1,5 +1,5 @@
 from flask_restx import Model
-from flask_restx import fields
+from flask_restx import inputs, fields
 from flask_restx.reqparse import RequestParser
 
 
@@ -27,7 +27,7 @@ todo_reqparser.add_argument(
 )
 todo_reqparser.add_argument(
     name='finished',
-    type=bool,
+    type=inputs.boolean,
     location='form',
     required=True,
     nullable=False
