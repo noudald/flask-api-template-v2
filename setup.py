@@ -6,24 +6,25 @@ APP_ROOT = Path(__file__).parent
 AUTHOR = 'Noud Aldenhoven'
 AUTHOR_EMAIL = 'noud.aldenhoven@gmail.com'
 INSTALL_REQUIRES = [
-    'Flask',
-    'Flask-Bcrypt',
-    'Flask-Cors',
-    'Flask-Migrate',
-    'Flask-SQLAlchemy',
-    'flask-restx',
-    'python-dotenv',
+    'Flask==2.1.2',
+    'Flask-Bcrypt==1.0.1',
+    'Flask-Cors==3.0.10',
+    'Flask-Migrate==3.1.0',
+    'Flask-SQLAlchemy==2.5.1',
+    'flask-restx==0.5.1',
+    'python-dotenv==0.20.0',
     'Werkzeug==2.1.2',
-    'PyJWT',
-    'python-dateutil',
+    'PyJWT==2.4.0',
+    'python-dateutil==2.8.2',
 ]
 EXTRAS_REQUIRE = {
     'dev': [
-        'pytest',
-        'pylint',
-        'pylint-flask',
-        'pylint-flask-sqlalchemy',
-        'tox',
+        'pytest==7.1.2',
+        'pytest-flask==1.2.0',
+        'pylint==2.14.5',
+        'pylint-flask==0.6',
+        'pylint-flask-sqlalchemy==0.2.0',
+        'tox==3.25.1',
     ]
 }
 

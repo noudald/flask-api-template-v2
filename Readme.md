@@ -24,12 +24,8 @@ FLASK_ENV=development
 SECRET_KEY="Change the secret key"
 ```
 
-To run the unit tests and linter, first make sure you installed tox
+To run the unit tests and linter:
 ```
-pip install tox
-```
-Then
-```
-python setup.py install
+pip install -e ".[dev]"
 tox
 ```
