@@ -26,6 +26,7 @@ todo_ns.models[todo_list_model.name] = todo_list_model
 
 @todo_ns.route('/task', endpoint='todo_tasks')
 class TodoList(Resource):
+    @todo_ns.doc(security='Bearer')
     @todo_ns.expect(todo_reqparser)
     @todo_ns.response(
         int(HTTPStatus.CREATED),
@@ -34,6 +35,10 @@ class TodoList(Resource):
     @todo_ns.response(
         int(HTTPStatus.BAD_REQUEST),
         'Validation error.'
+    )
+    @todo_ns.response(
+        int(HTTPStatus.UNAUTHORIZED),
+        'You do not have permission to add a new task.'
     )
     @todo_ns.response(
         int(HTTPStatus.INTERNAL_SERVER_ERROR),
@@ -67,6 +72,7 @@ class TodoList(Resource):
 
 @todo_ns.route('/task/<int:id>', endpoint='todo_task')
 class TodoTask(Resource):
+    @todo_ns.doc(security='Bearer')
     @todo_ns.expect(todo_reqparser)
     @todo_ns.response(
         int(HTTPStatus.ACCEPTED),
@@ -80,6 +86,10 @@ class TodoTask(Resource):
     @todo_ns.response(
         int(HTTPStatus.BAD_REQUEST),
         'Validation error.'
+    )
+    @todo_ns.response(
+        int(HTTPStatus.UNAUTHORIZED),
+        'You do not have permission to update a task.'
     )
     @todo_ns.response(
         int(HTTPStatus.INTERNAL_SERVER_ERROR),
@@ -119,6 +129,7 @@ class TodoTask(Resource):
         '''Get todo task.'''
         return get_todo_task(id)
 
+    @todo_ns.doc(security='Bearer')
     @todo_ns.response(
         int(HTTPStatus.NO_CONTENT),
         'Successfully deleted task.'
@@ -130,6 +141,10 @@ class TodoTask(Resource):
     @todo_ns.response(
         int(HTTPStatus.BAD_REQUEST),
         'Validation error.'
+    )
+    @todo_ns.response(
+        int(HTTPStatus.UNAUTHORIZED),
+        'You do not have permission to delete a task.'
     )
     @todo_ns.response(
         int(HTTPStatus.INTERNAL_SERVER_ERROR),

@@ -4,9 +4,11 @@ from flask import jsonify
 from flask_restx import abort
 
 from flask_api_template import db
+from flask_api_template.api.auth.decorators import token_required
 from flask_api_template.models.todo import TodoTask
 
 
+@token_required
 def new_todo_task(task, assigned, deadline, finished):
     new_task = TodoTask(
         task=task,
@@ -24,6 +26,7 @@ def new_todo_task(task, assigned, deadline, finished):
             deadline=new_task.deadline,
             finished=new_task.finished,
         ), HTTPStatus.CREATED
+
 
 def get_todo_task(id_):
     task = TodoTask.find_by_id(id_)
@@ -43,6 +46,7 @@ def get_todo_task(id_):
         ), HTTPStatus.OK
 
 
+@token_required
 def update_todo_task(id_, task, assigned, deadline, finished):
     if not TodoTask.find_by_id(id_):
         abort(
@@ -72,6 +76,7 @@ def update_todo_task(id_, task, assigned, deadline, finished):
     return response
 
 
+@token_required
 def delete_todo_task(id_):
     task = TodoTask.find_by_id(id_)
     if not task:
