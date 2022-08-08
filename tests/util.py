@@ -3,7 +3,9 @@ from datetime import date
 from flask import url_for
 
 
+USERNAME = 'testuser'
 EMAIL = 'test@email.com'
+ADMIN_USERNAME = 'testadmin'
 ADMIN_EMAIL = 'admin@email.com'
 PASSWORD = 'password1234'
 BAD_REQUEST = 'Input payload validation failed'
