@@ -18,18 +18,28 @@ DEFAULT_URL = 'https://www.default.com/'
 DEFAULT_DEADLINE = date.today().strftime('%m/%d/%y')
 
 
-def register_user(test_client, email=EMAIL, password=PASSWORD):
+def register_user(
+        test_client,
+        username=USERNAME,
+        email=EMAIL,
+        password=PASSWORD
+    ):
     return test_client.post(
         url_for('api.auth_register'),
-        data=f'email={email}&password={password}',
-        content_type='application/x-www-form-urlencoded'
+        data=f'username={username}&email={email}&password={password}',
+        content_type='application/x-www-form-urlencoded',
     )
 
 
-def login_user(test_client, email=EMAIL, password=PASSWORD):
+def login_user(
+        test_client,
+        username=USERNAME,
+        email=EMAIL,
+        password=PASSWORD
+    ):
     return test_client.post(
         url_for('api.auth_login'),
-        data=f'email={email}&password={password}',
+        data=f'username={username}&email={email}&password={password}',
         content_type='application/x-www-form-urlencoded'
     )
 

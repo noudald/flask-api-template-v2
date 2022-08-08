@@ -18,7 +18,7 @@ class Config:
     '''Basic configuration for Flask API'''
 
     APP_NAME = 'Flask API Template'
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv('SECRET_KEY', 'NotSoSecretTestKey')
     BCRYPT_LOG_ROUNDS = 4
     TOKEN_EXPIRE_HOURS = 0
     TOKEN_EXPIRE_MINUTES = 0
