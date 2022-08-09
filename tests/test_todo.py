@@ -34,6 +34,10 @@ def list_tasks(test_client):
     return test_client.get(url_for('api.todo_tasks'))
 
 
+def get_task(test_client, task_id):
+    return test_client.get(url_for('api.todo_task', id=task_id))
+
+
 def test_add_task(client):
     response = login_user(client)
 
@@ -44,12 +48,21 @@ def test_add_task(client):
     assert response.status_code == HTTPStatus.CREATED
     assert 'id' in response.json
 
-    task = TodoTask.find_by_id(response.json['id'])
+    id_ = response.json['id']
+    task = TodoTask.find_by_id(id_)
 
     assert task.assigned == TEST_ASSIGNED
     assert task.task == TEST_TASK
     assert task.deadline.strftime('%Y-%m-%d') == TEST_DEADLINE
     assert task.finished == TEST_FINISHED
+
+    response = get_task(client, id_)
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json['assigned'] == TEST_ASSIGNED
+    assert response.json['task'] == TEST_TASK
+    assert response.json['deadline'] == TEST_DEADLINE + ' 00:00:00'
+    assert response.json['finished'] == TEST_FINISHED
 
 
 def test_list_tasks(client):
@@ -59,3 +72,5 @@ def test_list_tasks(client):
     assert response.json['status'] == 'success'
     assert response.json['message'] == 'successfully collected all tasks'
     assert len(response.json['tasks']) > 0
+
+

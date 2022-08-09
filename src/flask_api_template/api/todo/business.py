@@ -95,7 +95,7 @@ def delete_todo_task(id_):
 def get_todo_list():
     todo_tasks = TodoTask.list_all_tasks()
     response = jsonify(
-        status='succes',
+        status='success',
         message='successfully collected all tasks',
         tasks=[
             {
