@@ -4,7 +4,7 @@ from flask_api_template.models.user import User
 from tests.util import USERNAME, EMAIL, register_user, login_user
 
 SUCCESS = 'Successfully logged in'
-UNAUTHORIZED = 'Email or password does not match'
+UNAUTHORIZED = f'Username {USERNAME} does not exists'
 
 
 def test_login(client, db):

@@ -21,7 +21,7 @@ def test_decode_access_token_success(user):
 
 def test_decode_access_token_expired(user):
     access_token = user.encode_access_token()
-    time.sleep(6)
+    time.sleep(2)
     result = User.decode_access_token(access_token)
     assert not result.success
-    assert result.error == 'Access token expired.'
+    assert result.error == 'Access token expired. Please login again'

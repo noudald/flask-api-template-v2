@@ -7,7 +7,7 @@ from tests.util import (
     logout_user
 )
 
-SUCCESS = 'successfully logged out'
+SUCCESS = 'Successfully logged out.'
 # TOKEN_BLACKLISTED = 'Token blacklisted. Please log in again.'
 # WWW_AUTH_BLACKLISTED_TOKEN = (
 #     f'{WWW_AUTH_NO_TOKEN}, '
