@@ -55,25 +55,22 @@ def update_todo_task(id_, task, assigned, deadline, finished):
             status='fail'
         )
 
-    todo_task = TodoTask.query.filter_by(id=id).first()
+    todo_task = TodoTask.query.filter_by(id=id_).first()
     todo_task.task = task
     todo_task.assigned = assigned
     todo_task.deadline = deadline
     todo_task.finished = finished
     db.session.commit()
 
-    response = jsonify(
-        status='success',
-        message='successfully updated task',
+    response = dict(
         id=id_,
         task=task,
         assigned=assigned,
         deadline=deadline,
         finished=finished
     )
-    response.status_code = HTTPStatus.CREATED
 
-    return response
+    return response, HTTPStatus.ACCEPTED
 
 
 @token_required
