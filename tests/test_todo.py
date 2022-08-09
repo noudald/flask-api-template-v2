@@ -44,6 +44,22 @@ def delete_task(test_client, access_token, task_id):
         headers={'Authorization': f'Bearer {access_token}'}
     )
 
+def update_task(
+        test_client,
+        access_token,
+        task_id,
+        assigned=TEST_ASSIGNED,
+        task=TEST_TASK,
+        deadline=TEST_DEADLINE,
+        finished=TEST_FINISHED,
+    ):
+    return test_client.put(
+        url_for('api.todo_task', id=task_id),
+        data=f'assigned={assigned}&task={task}&deadline={deadline}&finished={str(finished).lower()}',
+        content_type='application/x-www-form-urlencoded',
+        headers={'Authorization': f'Bearer {access_token}'}
+    )
+
 
 def test_add_task(client):
     response = login_user(client)
@@ -101,3 +117,27 @@ def test_delete_task(client):
     response = get_task(client, id_)
 
     assert response.status_code == HTTPStatus.CONFLICT
+
+
+def test_update_task(client):
+    response = login_user(client)
+
+    assert response.status_code == HTTPStatus.OK
+
+    access_token = response.json['access_token']
+    response = add_task(client, access_token)
+
+    assert response.status_code == HTTPStatus.CREATED
+    assert 'id' in response.json
+
+    id_ = response.json['id']
+
+    response = update_task(
+        client,
+        access_token,
+        id_,
+        task='This is an updated task'
+    )
+
+    assert response.status_code == HTTPStatus.ACCEPTED
+    assert response.json['task'] == 'This is an updated task'
