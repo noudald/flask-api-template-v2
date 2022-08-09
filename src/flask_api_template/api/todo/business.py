@@ -89,7 +89,7 @@ def delete_todo_task(id_):
     db.session.delete(task)
     db.session.commit()
 
-    return HTTPStatus.NO_CONTENT
+    return {}, HTTPStatus.NO_CONTENT
 
 
 def get_todo_list():

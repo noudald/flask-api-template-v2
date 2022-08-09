@@ -38,6 +38,13 @@ def get_task(test_client, task_id):
     return test_client.get(url_for('api.todo_task', id=task_id))
 
 
+def delete_task(test_client, access_token, task_id):
+    return test_client.delete(
+        url_for('api.todo_task', id=task_id),
+        headers={'Authorization': f'Bearer {access_token}'}
+    )
+
+
 def test_add_task(client):
     response = login_user(client)
 
@@ -74,3 +81,23 @@ def test_list_tasks(client):
     assert len(response.json['tasks']) > 0
 
 
+def test_delete_task(client):
+    response = login_user(client)
+
+    assert response.status_code == HTTPStatus.OK
+
+    access_token = response.json['access_token']
+    response = add_task(client, access_token)
+
+    assert response.status_code == HTTPStatus.CREATED
+    assert 'id' in response.json
+
+    id_ = response.json['id']
+
+    response = delete_task(client, access_token, id_)
+
+    assert response.status_code == HTTPStatus.NO_CONTENT
+
+    response = get_task(client, id_)
+
+    assert response.status_code == HTTPStatus.CONFLICT
