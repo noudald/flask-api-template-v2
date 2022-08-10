@@ -22,6 +22,11 @@ Create a file `.env` in the root folder with
 FLASK_APP=run.py
 FLASK_ENV=development
 SECRET_KEY="Change the secret key"
+SQL_USER="Database user"
+SQL_HOST="Database hostname"
+SQL_PORT="Database port"
+SQL_DB_NAME="Database name"
+SQL_PASS="Database password"
 ```
 
 To run the unit tests and linter:

@@ -6,12 +6,15 @@ from pathlib import Path
 
 CUR_PATH = Path(__file__).parent
 
-# SQLITE_DEV = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_dev.db')
-# SQLITE_TEST = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_test.db')
-# SQLITE_PROD = 'sqlite:///' + str(CUR_PATH / 'flask_api_template_prod.db')
-SQLITE_DEV = 'sqlite:///flask_api_template_dev.db'
-SQLITE_TEST = 'sqlite:///flask_api_template_test.db'
-SQLITE_PROD = 'sqlite:///flask_api_template_prod.db'
+SQL_USER = os.getenv('SQL_USER')
+SQL_HOST = os.getenv('SQL_HOST')
+SQL_PORT = os.getenv('SQL_PORT')
+SQL_DB_NAME = os.getenv('SQL_DB_NAME')
+SQL_PASS = os.getenv('SQL_PASS')
+
+SQL_DEV = f'postgresql://{SQL_USER}:{SQL_PASS}@{SQL_HOST}:{SQL_PORT}/{SQL_DB_NAME}'
+SQL_TEST = 'sqlite:///flask_api_template_test.db'
+SQL_PROD = 'sqlite:///flask_api_template_prod.db'
 
 
 class Config:
@@ -33,14 +36,14 @@ class TestingConfig(Config):
     '''Testing configuration.'''
 
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = SQLITE_TEST
+    SQLALCHEMY_DATABASE_URI = SQL_TEST
 
 
 class DevelopmentConfig(Config):
     '''Development configuration.'''
 
     TOKEN_EXPIRE_MINUTES = 15
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", SQLITE_DEV)
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", SQL_DEV)
 
 
 class ProductionConfig(Config):
@@ -48,7 +51,7 @@ class ProductionConfig(Config):
 
     TOKEN_EXPIRE_HOURS = 1
     BCRYPT_LOG_ROUNDS = 13
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", SQLITE_PROD)
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", SQL_PROD)
     PRESERVE_CONTEXT_ON_EXCEPTION = True
 
 
